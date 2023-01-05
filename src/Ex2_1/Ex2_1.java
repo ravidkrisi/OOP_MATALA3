@@ -13,7 +13,7 @@ public class Ex2_1
 
         for (int i = 0; i <n; i++)
         {
-            File file1 = new File("C:\\Users\\mayaz\\INTELIIJ\\TEST"+"\\file_"+(i+1)+".txt");
+            File file1 = new File("./file_"+(i+1)+".txt");
             int numOfLines = rand.nextInt(bound);
 
             try
@@ -57,18 +57,21 @@ public class Ex2_1
                System.err.println("ERROR");
            }
            sum = sum+lines;
-
-           //System.out.println("num of lines" + lines);
-          //System.out.println(sum);
-
        }
 
         return sum;
     }
 
-    public int getNumOfLinesThreads(String[] fileNames)
+    public static int getNumOfLinesThreads(String[] fileNames) throws InterruptedException
     {
-
+        MyThread t = new MyThread("defualt");
+        for (int i=0; i < fileNames.length; i++)
+        {
+            t = new MyThread(fileNames[i]);
+            t.start();
+        }
+        t.join();
+        return MyThread.sum;
     }
 
 
