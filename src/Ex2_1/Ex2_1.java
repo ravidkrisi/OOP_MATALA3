@@ -2,6 +2,7 @@ package Ex2_1;
 
 import java.io.*;
 import java.util.Random;
+import java.util.concurrent.*;
 
 public class Ex2_1
 {
@@ -13,7 +14,7 @@ public class Ex2_1
 
         for (int i = 0; i <n; i++)
         {
-            File file1 = new File("C:\\Users\\mayaz\\INTELIIJ\\TEST"+"\\file_"+(i+1)+".txt");
+            File file1 = new File("./file_"+(i+1)+".txt");
             int numOfLines = rand.nextInt(bound);
 
             try
@@ -57,20 +58,55 @@ public class Ex2_1
                System.err.println("ERROR");
            }
            sum = sum+lines;
-
-           //System.out.println("num of lines" + lines);
-          //System.out.println(sum);
-
        }
 
         return sum;
     }
 
-    public int getNumOfLinesThreads(String[] fileNames)
+    public static int getNumOfLinesThreads(String[] fileNames) throws InterruptedException
     {
+        int total=0;
+        MyThread[] thread_pool = new MyThread[fileNames.length];
+        for(int i=0; i < thread_pool.length; i++)
+        {
+            thread_pool[i] = new MyThread(fileNames[i]);
+        }
 
+        for(MyThread t: thread_pool)
+        {
+            t.start();
+        }
+
+        for (MyThread t: thread_pool)
+        {
+            t.join();
+        }
+
+        for(MyThread t: thread_pool)
+        {
+            total+=t.lines;
+        }
+        return total;
     }
 
+    public static int  getNumOfLinesThreadPool(String[] fileNames) throws ExecutionException, InterruptedException {
+        ExecutorService excecuter = Executors.newFixedThreadPool(fileNames.length);
+        int total_lines=0;
+        Future <Integer>[] threads_future = new Future[fileNames.length];
+        int i=0;
+        for (String file: fileNames)
+        {
+            MyThreadPool t = new MyThreadPool(file);
+            threads_future[i++] = excecuter.submit(t);
+        }
 
+        for(Future<Integer> t: threads_future)
+        {
+            total_lines+=t.get();
+        }
+
+        excecuter.shutdown();
+        return total_lines;
+    }
 
 }
