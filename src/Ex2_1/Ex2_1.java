@@ -2,6 +2,7 @@ package Ex2_1;
 
 import java.io.*;
 import java.util.Random;
+import java.util.concurrent.*;
 
 public class Ex2_1
 {
@@ -64,16 +65,40 @@ public class Ex2_1
 
     public static int getNumOfLinesThreads(String[] fileNames) throws InterruptedException
     {
-        MyThread t = new MyThread("defualt");
-        for (int i=0; i < fileNames.length; i++)
+        int total=0;
+        MyThread[] thread_pool = new MyThread[fileNames.length];
+        for(int i=0; i < thread_pool.length; i++)
         {
-            t = new MyThread(fileNames[i]);
+            thread_pool[i] = new MyThread(fileNames[i]);
+        }
+
+        for(MyThread t: thread_pool)
+        {
             t.start();
         }
-        t.join();
-        return MyThread.sum;
+
+        for (MyThread t: thread_pool)
+        {
+            t.join();
+        }
+
+        for(MyThread t: thread_pool)
+        {
+            total+=t.lines;
+        }
+        return total;
     }
 
-
+    public static int  getNumOfLinesThreadPool(String[] fileNames) throws ExecutionException, InterruptedException {
+        ExecutorService excecuter = Executors.newFixedThreadPool(fileNames.length);
+        int total_lines=0;
+        for (String file: fileNames)
+        {
+            MyThreadPool t = new MyThreadPool(file);
+            total_lines += excecuter.submit(t).get();
+        }
+        excecuter.shutdown();
+        return total_lines;
+    }
 
 }
