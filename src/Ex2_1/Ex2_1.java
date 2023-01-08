@@ -92,11 +92,19 @@ public class Ex2_1
     public static int  getNumOfLinesThreadPool(String[] fileNames) throws ExecutionException, InterruptedException {
         ExecutorService excecuter = Executors.newFixedThreadPool(fileNames.length);
         int total_lines=0;
+        Future <Integer>[] threads_future = new Future[fileNames.length];
+        int i=0;
         for (String file: fileNames)
         {
             MyThreadPool t = new MyThreadPool(file);
-            total_lines += excecuter.submit(t).get();
+            threads_future[i++] = excecuter.submit(t);
         }
+
+        for(Future<Integer> t: threads_future)
+        {
+            total_lines+=t.get();
+        }
+
         excecuter.shutdown();
         return total_lines;
     }

@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
 public class Main {
     public static void main(String[] args) throws InterruptedException, IOException, ExecutionException {
 
-        int files_number = 1000;
+        int files_number = 10000;
         Ex2_1.createTextFiles(files_number,3,100);
         String[] files = new String[files_number];
 
