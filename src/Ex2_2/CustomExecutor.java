@@ -21,11 +21,13 @@ public class CustomExecutor extends ThreadPoolExecutor
      * @param t the task we want to execute
      * @return Future holds the thread executing the task we passed
      */
-    public <T> Future <T> submit(Task t)
+
+    public <T> Future <T> submit(Task <T> t)
     {
-        list_priorities[t.getPriority()]++;
-        Future <T> f = this.submit(t);
-        return f;
+        list_priorities[t.getPriority()-1]++;
+        AdapterToTask <T> task = new AdapterToTask<>(t.getTask(), t.getPriority());
+        super.execute(task);
+        return task;
     }
 
     /**
@@ -51,7 +53,38 @@ public class CustomExecutor extends ThreadPoolExecutor
         return submit(task);
     }
 
+    /**
+     * this method returning the highest priority number(which is the lowest)
+     * the currently is the priorityBolcking queueu
+     * @return the max priorty number in the queue
+     */
+    public int getCurrentMax()
+    {
+        for(int i=0;i<10;i++)
+        {
+            if(list_priorities[i]>0)
+            {
+                return i+1;
+            }
+        }
+        return 10;
+    }
 
+    /**
+     * this method decrease the list of priorities in
+     * @param t The thread that will run task r
+     * @param r The task that will be executed
+     */
+    @Override
+    protected void beforeExecute(Thread t, Runnable r)
+    {
+        list_priorities[(((AdapterToTask)r).getPriority())-1]--;
+    }
+
+    public void Terminate()
+    {
+        super.shutdown();
+    }
 
 
 

@@ -90,4 +90,10 @@ public class Task <T> implements Comparable <Task<T>>, Callable <T>
         }
         return -1;
     }
+
+    public Callable <T> getTask()
+    {
+        return this.task;
+    }
+
 }

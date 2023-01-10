@@ -6,14 +6,16 @@ import java.util.concurrent.FutureTask;
 public class AdapterToTask <T> extends FutureTask <T> implements Comparable<AdapterToTask<T>>
 {
 
-    public Callable <T> task;
+    private Callable <T> task;
+    private int priority;
     /**
      * a constructor
      * @param call the task we want to do
      */
-    public AdapterToTask(Callable<T> call) {
+    public AdapterToTask(Callable<T> call, int priority) {
         super(call);
         this.task = call;
+        this.priority = priority;
     }
 
     /**
@@ -22,7 +24,7 @@ public class AdapterToTask <T> extends FutureTask <T> implements Comparable<Adap
      */
     public int getPriority()
     {
-        return ((Task)this.task).getPriority();
+        return this.priority;
     }
 
     /**
