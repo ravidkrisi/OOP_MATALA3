@@ -34,12 +34,12 @@ public class AdapterToTask <T> extends FutureTask <T> implements Comparable<Adap
     public int compareTo(AdapterToTask<T> obj)
     {
         int local = this.getPriority();
-        int outer = obj.getPriority();
-        if (local > outer)
+        int other = obj.getPriority();
+        if (local > other)
         {
             return 1;
         }
-        else if(outer > local)
+        else if(other > local)
         {
             return -1;
         }

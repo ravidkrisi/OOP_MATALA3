@@ -49,6 +49,10 @@ public class Task <T> implements Comparable <Task<T>>, Callable <T>
         return new Task(task_type, task);
     }
 
+    /**
+     * getter for taskType priority
+     * @return the priority of the instance of Task
+     */
     public int getPriority()
     {
         return this.task_type.getPriorityValue();
@@ -74,11 +78,13 @@ public class Task <T> implements Comparable <Task<T>>, Callable <T>
     @Override
     public int compareTo(Task<T> obj)
     {
-        if(this.task_type.getPriorityValue()>obj.task_type.getPriorityValue())
+        int local = this.getPriority();
+        int other = obj.getPriority();
+        if(local>other)
         {
             return 1;
         }
-        else if(this.task_type.getPriorityValue() == obj.task_type.getPriorityValue())
+        else if(local == other)
         {
             return 0;
         }
