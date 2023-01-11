@@ -33,7 +33,7 @@ public class Task <T> implements Comparable <Task<T>>, Callable <T>
      * @param task the task we want to do
      * @return the instance of the Task we created
      */
-    public static Task CreateTask(Callable task)
+    public static Task createTask(Callable task)
     {
         return new Task(task);
     }
@@ -44,7 +44,7 @@ public class Task <T> implements Comparable <Task<T>>, Callable <T>
      * @param task_type the type of task we want to do
      * @return the instance of the Task we created
      */
-    public static Task CreateTask(Callable task, TaskType task_type)
+    public static Task createTask(Callable task, TaskType task_type)
     {
         return new Task(task_type, task);
     }

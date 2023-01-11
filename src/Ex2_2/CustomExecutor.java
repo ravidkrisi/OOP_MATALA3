@@ -38,7 +38,7 @@ public class CustomExecutor extends ThreadPoolExecutor
      */
     public <T> Future <T> submit(Callable <T> t, TaskType pr)
     {
-        Task task = Task.CreateTask(t, pr);
+        Task task = Task.createTask(t, pr);
         return submit(task);
     }
 
@@ -49,7 +49,7 @@ public class CustomExecutor extends ThreadPoolExecutor
      */
     public <T> Future <T> submit(Callable <T> t)
     {
-        Task task = Task.CreateTask(t);
+        Task task = Task.createTask(t);
         return submit(task);
     }
 
@@ -67,7 +67,7 @@ public class CustomExecutor extends ThreadPoolExecutor
                 return i+1;
             }
         }
-        return 10;
+        return 0;
     }
 
     /**
@@ -86,10 +86,10 @@ public class CustomExecutor extends ThreadPoolExecutor
         super.shutdown();
     }
 
-
-
-
-
-
-
+    /**
+     * this method shutdown the threadpoolExecuter
+     */
+    public void gracefullyTerminate(){
+        super.shutdown();
+    }
 }
