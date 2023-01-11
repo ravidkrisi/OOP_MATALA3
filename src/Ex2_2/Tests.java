@@ -13,7 +13,7 @@ import static java.lang.Thread.sleep;
 public class Tests {
     public static final Logger logger = LoggerFactory.getLogger(Tests.class);
     @Test
-    public void partialTest(){
+    public void partialTest() throws InterruptedException {
         CustomExecutor customExecutor = new CustomExecutor(); var task = Task.createTask(()->{
             int sum = 0;
             for (int i = 1; i <= 10; i++) {

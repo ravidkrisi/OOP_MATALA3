@@ -1,5 +1,6 @@
 package Ex2_2;
 
+import java.sql.Time;
 import java.util.concurrent.*;
 
 public class CustomExecutor extends ThreadPoolExecutor
@@ -89,7 +90,8 @@ public class CustomExecutor extends ThreadPoolExecutor
     /**
      * this method shutdown the threadpoolExecuter
      */
-    public void gracefullyTerminate(){
+    public void gracefullyTerminate() throws InterruptedException {
         super.shutdown();
+        while(!super.awaitTermination(10, TimeUnit.MILLISECONDS));
     }
 }
