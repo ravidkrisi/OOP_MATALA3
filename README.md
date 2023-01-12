@@ -25,6 +25,8 @@ basic test file that creates 500 files with random number of lines and excecutin
 
 this test shows that with the variables we entered to generate the files the getNumOfLinesThreads is the fastest of all three.
 
+![Screenshot](EX2_1_DIAGRAM.png)
+
 ## EX2_2:
 in this part we created our own ThreadpoolExecuter with priority to tasks we have created.
 
