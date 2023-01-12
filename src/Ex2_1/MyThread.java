@@ -9,10 +9,18 @@ public class MyThread extends Thread
     public String file_name;
     public int lines;
 
+    /**
+     * Constructor of the class.
+     * @param file_name string representing the name of the file
+     */
     public MyThread(String file_name)
     {
         this.file_name = file_name;
     }
+
+    /**
+     * Run method
+     */
     public void run()
     {
         int lines = 0;

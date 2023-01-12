@@ -6,6 +6,13 @@ import java.util.concurrent.*;
 
 public class Ex2_1
 {
+    /**
+     * This method creat text files with random number of lines
+     * @param n Number of text files to creat
+     * @param seed Starting seed for num of lines
+     * @param bound max num of lines in each file
+     * @return An array with the names of each file
+     */
     public static String[] createTextFiles(int n, int seed, int bound)
     {
         Random rand = new Random(seed);
@@ -39,6 +46,11 @@ public class Ex2_1
         return nameOfFiles;
     }
 
+    /**
+     * This method reads the number of lines in given array of text files names
+     * @param nameOfFiles An array that contains the names of each file
+     * @return the number of total lines
+     */
     public static int getNumOfLines(String[] nameOfFiles)
     {
        int sum = 0;
@@ -63,6 +75,12 @@ public class Ex2_1
         return sum;
     }
 
+    /**
+     * This method reads the number of lines of given array, using threads.
+     * @param fileNames An array that contains the names of each file
+     * @return the number of total lines
+     * @throws InterruptedException
+     */
     public static int getNumOfLinesThreads(String[] fileNames) throws InterruptedException
     {
         int total=0;
@@ -89,24 +107,31 @@ public class Ex2_1
         return total;
     }
 
-    public static int  getNumOfLinesThreadPool(String[] fileNames) throws ExecutionException, InterruptedException {
-        ExecutorService excecuter = Executors.newFixedThreadPool(fileNames.length);
+    /**
+     * This method reads the number of lines of given array, using a thread pool.
+     * @param fileNames An array that contains the names of each file
+     * @return the number of total lines
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public static int  getNumOfLinesThreadPool(String[] fileNames) throws ExecutionException, InterruptedException
+    {
+        ExecutorService excecutor = Executors.newFixedThreadPool(fileNames.length);
         int total_lines=0;
         Future <Integer>[] threads_future = new Future[fileNames.length];
         int i=0;
+
         for (String file: fileNames)
         {
             MyThreadPool t = new MyThreadPool(file);
-            threads_future[i++] = excecuter.submit(t);
+            threads_future[i++] = excecutor.submit(t);
         }
 
         for(Future<Integer> t: threads_future)
         {
             total_lines+=t.get();
         }
-
-        excecuter.shutdown();
+        excecutor.shutdown();
         return total_lines;
     }
-
 }

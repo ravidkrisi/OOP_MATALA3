@@ -7,14 +7,22 @@ import java.util.concurrent.Callable;
 
 public class MyThreadPool implements Callable <Integer>
 {
-
     private String file_name;
 
+    /**
+     * Constructor
+     * @param file_name String representing the name of the file
+     */
     public MyThreadPool(String file_name)
     {
         this.file_name = file_name;
     }
 
+    /**
+     * Call method
+     * @return total number of lines read from the file.
+     * @throws Exception
+     */
     @Override
     public Integer call() throws Exception
     {
