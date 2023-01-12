@@ -63,4 +63,6 @@ this CustomThreadPool using BlockingPriorityQueue to execute the tasks passed to
 
 test file that was given 
 
+![Screenshot](EX2_2_DIAGRAM.png)
+
 
